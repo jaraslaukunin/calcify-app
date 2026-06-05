@@ -17,6 +17,11 @@ package.domain = org.jaraslaukunin
 # (str) Source code where the main.py live
 source.dir = .
 
+android.accept_sdk_license = True
+android.ndk = 23c
+android.sdk = 30
+android.build_tools = 30.0.3
+
 # (list) Source files to include (leave empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas, ttf
 
