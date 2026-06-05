@@ -5,54 +5,32 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
-env:
-  # Автоматически принимать лицензии Android SDK
-  ANDROID_SDK_ROOT: /home/runner/.buildozer/android/platform/android-sdk
-  # Отключаем интерактивный режим для принятия лицензий
-  BUILD_GUARD: 0
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
-    
-    - name: Install buildozer
-      run: |
-        python -m pip install --upgrade pip
-        pip install buildozer cython
-    
-    - name: Accept Android SDK licenses
-      run: |
-        # Создаём директорию и принимаем лицензии
-        mkdir -p ~/.android
-        echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55\nd56f5187479451eabf01fb78af6dfcb131a6481e\n24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.android/repositories.cfg
-        # Принимаем все лицензии автоматически
-        yes | sdkmanager --licenses || true
-    
-    - name: Build APK
-      run: |
-        # Создаём файл buildozer.spec если его нет
-        if [ ! -f buildozer.spec ]; then
-          buildozer init
-        fi
-        # Запускаем сборку
-        buildozer android debug
-      env:
-        # Автоматически принимаем лицензии
-        ANDROID_SDK_LICENSE: true
-        # Отключаем интерактивные запросы
-        BUILD_GUARD: 0
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: Calcify-APK
-        path: bin/*.apk
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install buildozer
+        run: |
+          python -m pip install --upgrade pip
+          pip install buildozer cython
+
+      - name: Build APK
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: stable
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Calcify-APK
+          path: ${{ steps.buildozer.outputs.filename }}
