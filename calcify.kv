@@ -1,0 +1,28 @@
+#:kivy 2.0.0
+
+<RoundedButton>:
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1) if not self.is_operator and not self.is_equal and not self.is_function else (0.9, 0.91, 0.93, 1) if self.is_operator else (0.94, 0.96, 1, 1) if self.is_function else (0.23, 0.51, 0.96, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [12,]
+
+    canvas.after:
+        Color:
+            rgba: (0, 0, 0, 0.03)
+        Line:
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 12)
+            width: 0.5
+
+<CalculatorApp>:
+    canvas.before:
+        Color:
+            rgba: (0.94, 0.95, 0.98, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
