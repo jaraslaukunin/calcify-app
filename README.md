@@ -1,222 +1,168 @@
-# 🔢 Calcify — калькулятор на Python и Kivy
+<div align="center">
 
-[![Python](https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Kivy](https://img.shields.io/badge/Kivy-2.3-8CC84B?style=for-the-badge&logo=kivy&logoColor=white)](https://kivy.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)]()
+# Calcify
 
-**Calcify** — настольное приложение-калькулятор, разработанное на **Python** с использованием фреймворка **Kivy**.
+**Инженерный калькулятор на Python и Kivy: дроби, π, тригонометрия — один код для Android и macOS.**
 
-Приложение предназначено для выполнения базовых арифметических операций через простой, современный и адаптивный графический интерфейс.
+[![Python](https://img.shields.io/badge/Python-3-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Kivy](https://img.shields.io/badge/Kivy-2-2E8B57?style=for-the-badge&logo=kivy&logoColor=white)](https://kivy.org/)
+[![Android](https://img.shields.io/badge/Android-Buildozer-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://buildozer.readthedocs.io/)
+[![PyInstaller](https://img.shields.io/badge/PyInstaller-Desktop-2B2B2B?style=for-the-badge)](https://pyinstaller.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
-> **Проект:** Calcify  
-> **Автор:** Jaraslau Kunin  
-> **Тип:** Desktop-приложение  
-> **Версия:** 1.0
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-calcify--app-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jaraslaukunin/calcify-app)
 
-<img width="425" height="757" alt="image" src="https://github.com/user-attachments/assets/e700378e-f554-453c-b9fd-8967ba09cb0e" />
+**[Возможности](#возможности)** · [Режимы и вычисления](#режимы-и-вычисления) · [Технологии](#технологии) · [Быстрый старт](#быстрый-старт) · [Сборка](#сборка) · [Структура проекта](#структура-проекта) · [Лицензия](#лицензия)
 
-
-
----
-
-## Содержание
-
-- [Возможности](#возможности)
-- [Технологии](#технологии)
-- [Поддерживаемые операции](#поддерживаемые-операции)
-- [Установка и запуск](#установка-и-запуск)
-- [Структура проекта](#структура-проекта)
-- [Пример использования](#пример-использования)
-- [Лицензия](#лицензия)
-- [Автор](#автор)
+</div>
 
 ---
+
+## О проекте
+
+**Calcify** — калькулятор с интерфейсом на Kivy: сетка из 40 кнопок, крупный дисплей с отдельной строкой выражения и результата, светлая тема и шрифт JetBrains Mono. Окно фиксированного размера 420×720 — макет рассчитан и на десктоп, и на телефон в портретной ориентации.
+
+Помимо обычной арифметики Calcify умеет работать с дробями: результат автоматически показывается обыкновенной дробью (в том числе с целой частью), а кнопка **F ↔ D** переключает дробь и десятичную запись. Отдельно обрабатываются выражения с π — ответ тоже может выглядеть как дробь с π.
+
+Приложение полностью локальное: без сети, базы данных и аккаунтов. Вся логика — в одном `main.py`, оформление кнопок — в `calcify.kv`.
 
 ## Возможности
 
-| Раздел | Возможность |
-|---|---|
-| Базовые вычисления | Выполнение арифметических операций с числами |
-| Графический интерфейс | Удобный интерфейс с экраном ввода и кнопками |
-| Ввод выражений | Построение математического выражения через кнопки калькулятора |
-| Результат | Отображение введённого выражения и результата вычисления |
-| Очистка | Полная очистка текущего выражения |
-| Удаление символов | Удаление последнего введённого символа |
-| Обработка ошибок | Корректная реакция на некорректные выражения и деление на ноль |
-| Адаптивность | Возможность изменения размера окна приложения |
+| Раздел | Что умеет |
+| :-- | :-- |
+| Арифметика | `+`, `−`, `×`, `÷`, возведение в степень `^`, корень `√`, скобки, `±`, `DEL`, `C` |
+| Тригонометрия | `sin`, `cos`, `tg` и обратные `arcsin`, `arccos`, `arctg` |
+| Логарифмы | `log₁₀`, натуральный `ln` и `log` с произвольным основанием |
+| Константы | `π` и `e` |
+| Дроби | Дробный вывод результата, смешанные дроби, переключение **F ↔ D** |
+| ANS | Вставка последнего результата в новое выражение |
+| Режимы углов | `AUTO`, `RAD`, `DEG` с индикатором на дисплее |
+| Ввод | Автозакрытие скобок, неявное умножение (`2π`, `3(4+1)`), защита от двойных операторов и лишних нулей |
+| Ошибки | Вместо падения — сообщение «Ошибка» и возможность продолжить ввод |
 
----
+## Режимы и вычисления
+
+| Режим | Поведение |
+| :-- | :-- |
+| `AUTO` | Радианы, если в выражении встречается `π`, иначе градусы |
+| `RAD` | Все тригонометрические функции считаются в радианах |
+| `DEG` | Аргументы и результаты обратных функций переводятся в градусы |
+
+Ввод собирается в строку, где `×`, `÷` и `−` заменяются на Python-операторы, `tg`/`arcsin`/`arctg` — на `tan`/`asin`/`atan`, а `log(основание, аргумент)` переписывается в отношение десятичных логарифмов. Вычисление идёт через `eval` с собственным словарём функций и пустым `__builtins__`; результат форматируется через `fractions.Fraction` (дроби и π) либо в экспоненциальной записи для очень больших чисел.
 
 ## Технологии
 
-| Технология | Использование |
-|---|---|
-| Python | Основной язык разработки |
-| Kivy | Создание графического интерфейса |
-| KV Language | Описание структуры и внешнего вида интерфейса |
-| Python Standard Library | Выполнение вспомогательной логики приложения |
+- **Python 3** — язык приложения, без сторонних библиотек кроме Kivy.
+- **Kivy 2** — кроссплатформенный UI: `BoxLayout`, `GridLayout`, canvas-рисование скруглённых кнопок.
+- **KV-язык** — правила оформления в `calcify.kv`.
+- **Buildozer / python-for-android** — сборка debug-APK для Android.
+- **PyInstaller** — сборка настольного приложения (в `Calcify.spec` описан macOS-бандл `Calcify.app`).
+- **Docker** — образ на базе `kivy/buildozer` как воспроизводимое окружение сборки.
+- **GitHub Actions** — workflow `build-apk.yml` собирает APK и складывает его в артефакт.
 
-Проект запускается непосредственно через Python. Сборка в `.exe`, `.apk` или другой бинарный формат в рамках репозитория не предусмотрена.
-
----
-
-## Поддерживаемые операции
-
-Calcify поддерживает основные математические действия:
-
-| Операция | Символ | Пример |
-|---|---:|---|
-| Сложение | `+` | `12 + 8 = 20` |
-| Вычитание | `−` | `15 - 6 = 9` |
-| Умножение | `×` | `7 × 4 = 28` |
-| Деление | `÷` | `20 ÷ 5 = 4` |
-| Десятичные числа | `.` | `2.5 + 1.3 = 3.8` |
-| Проценты | `%` | В зависимости от реализованной логики приложения |
-| Смена знака | `±` | `8 → -8` |
-
-> Набор операций может отличаться в зависимости от текущей версии Calcify.
-
----
-
-## Установка и запуск
+## Быстрый старт
 
 ### Требования
 
-Для запуска приложения потребуется:
+- Python 3.10+ (в CI используется 3.10)
+- Kivy 2
+- для Android — Buildozer и JDK; Android SDK/NDK Buildozer скачивает сам
 
-- Python 3.10 или новее;
-- `pip`;
-- установленная библиотека Kivy.
-
-### 1. Клонирование репозитория
+### Установка и запуск
 
 ```bash
-git clone [https://github.com/jaraslaukunin/calcify.git](https://github.com/jaraslaukunin/calcify.git)
-cd calcify
-```
+git clone https://github.com/jaraslaukunin/calcify-app.git
+cd calcify-app
 
-### 2. Создание виртуального окружения
-
-```bash
-python -m venv venv
-```
-
-### 3. Активация окружения
-
-**Windows PowerShell:**
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-**Windows cmd:**
-
-```bat
-venv\Scripts\activate
-```
-
-**Linux / macOS:**
-
-```bash
-source venv/bin/activate
-```
-
-### 4. Установка зависимостей
-
-Если в проекте есть файл `requirements.txt`, установите зависимости командой:
-
-```bash
-pip install -r requirements.txt
-```
-
-Или установите Kivy вручную:
-
-```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install kivy
-```
 
-### 5. Запуск приложения
-
-```bash
 python main.py
 ```
 
-После запуска откроется окно калькулятора Calcify.
+В репозитории нет `requirements.txt`, поэтому Kivy ставится вручную, а версия зависимости не зафиксирована. Шрифты `JetBrainsMono-Regular.ttf` и `JetBrainsMono-Bold.ttf` лежат в корне: если их не найдёт `LabelBase`, приложение откатится на встроенный в Kivy Roboto.
 
----
+## Сборка
+
+### Android (Buildozer)
+
+```bash
+pip install buildozer cython
+buildozer android debug
+```
+
+Готовый APK появится в `bin/`. Настройки из `buildozer.spec`:
+
+| Параметр | Значение |
+| :-- | :-- |
+| `title` | `Calcify (L28)` |
+| `package.name` / `package.domain` | `calcify` / `org.jaraslaukunin` |
+| `version` | `0.1` |
+| `requirements` | `python3,kivy` |
+| `orientation` | `portrait` |
+| `android.archs` | `arm64-v8a, armeabi-v7a` |
+
+### Docker
+
+`Dockerfile` собирает окружение на базе `kivy/buildozer` (linux/amd64) и добавляет 32-битные библиотеки:
+
+```bash
+docker build -t calcify-build .
+docker run --rm -v "$PWD":/home/user/hostcwd calcify-build buildozer android debug
+```
+
+`/home/user/hostcwd` — рабочий каталог базового образа `kivy/buildozer`, в него монтируется проект.
+
+### Десктоп (PyInstaller)
+
+```bash
+pip install pyinstaller
+pyinstaller Calcify.spec
+```
+
+Спек включает `calcify.kv` и оба шрифта в `datas`, поэтому ресурсы попадают внутрь сборки. Спек рассчитан на macOS: на выходе — `dist/Calcify.app` и рядом каталог `dist/Calcify/`.
+
+### CI
+
+Workflow `.github/workflows/build-apk.yml` запускается на push в `main`/`master` и вручную (`workflow_dispatch`). На `ubuntu-latest` он ставит Python 3.10, Buildozer и Cython, выполняет `buildozer android debug` и загружает артефакт `Calcify-APK` из `bin/*.apk`.
 
 ## Структура проекта
 
 ```text
-calcify/
-├── main.py                      # Точка входа и логика приложения
-├── calculator.kv                # Разметка интерфейса Kivy
-├── requirements.txt             # Python-зависимости проекта
-├── LICENSE
-├── README.md
-│
-├── assets/
-│   ├── icons/                   # Иконки приложения
-│   ├── images/                  # Изображения и графические ресурсы
-│   └── fonts/                   # Шрифты при наличии
-│
-└── __pycache__/                 # Автоматически создаваемый Python-кэш
+calcify-app/
+├── main.py                      # приложение: UI, ввод, разбор выражения, форматирование
+├── calcify.kv                   # правила оформления RoundedButton и фона
+├── buildozer.spec               # конфигурация Android-сборки
+├── Calcify.spec                 # конфигурация PyInstaller
+├── Dockerfile                   # окружение сборки на kivy/buildozer
+├── .github/workflows/build-apk.yml
+├── JetBrainsMono-Regular.ttf
+├── JetBrainsMono-Bold.ttf
+└── bin/                         # сюда Buildozer кладёт APK (в репозитории пусто)
 ```
 
-> Структура может отличаться в зависимости от реализации. Каталог `__pycache__` не следует добавлять в Git-репозиторий.
+Каталоги `build/`, `dist/` и `.buildozer/` — локальные артефакты сборки, в репозиторий они не входят.
 
----
+## Известные ограничения
 
-## Пример использования
-
-1. Запустите приложение командой:
-
-   ```bash
-   python main.py
-   ```
-
-2. Введите выражение с помощью кнопок интерфейса, например:
-
-   ```text
-   125.5 × 4 - 50
-   ```
-
-3. Нажмите кнопку `=`.
-
-4. На экране отобразится результат:
-
-   ```text
-   452
-   ```
-
-5. Используйте кнопку `C`, чтобы очистить выражение, или `⌫`, чтобы удалить последний символ.
-
----
+- Кнопка `%` отправляет в выражение Python-оператор остатка от деления, а не «процент от числа»: `200 % 10` вернёт `0`.
+- Нет истории вычислений и ячеек памяти (`M+`, `MR`).
+- В коде есть обработчики `1/x` и модуля числа, но соответствующих кнопок в сетке нет.
+- Нет `requirements.txt`, `.gitignore` и тестов — версии зависимостей и артефакты сборки не зафиксированы.
 
 ## Лицензия
 
-Проект распространяется под лицензией [MIT](LICENSE).
-
-Вы можете использовать, копировать, изменять и распространять код в соответствии с условиями лицензии. При распространении необходимо сохранять исходный текст лицензии и уведомление об авторских правах.
+Проект распространяется под лицензией [**MIT**](LICENSE): код можно свободно использовать, изменять и распространять при сохранении текста лицензии и указания авторства.
 
 ---
 
-## Автор
+<div align="center">
 
-**Jaraslau Kunin**  
-Разработчик на Python / Kivy  
-GitHub: [@jaraslaukunin](https://github.com/jaraslaukunin)
+[github.com/jaraslaukunin/calcify-app](https://github.com/jaraslaukunin/calcify-app)
 
-<p align="center">
-  <a href="https://github.com/jaraslaukunin/calcify">
-    <img
-      src="https://img.shields.io/badge/Открыть_репозиторий_на_GitHub-181717?style=for-the-badge&logo=github&logoColor=white"
-      alt="Открыть репозиторий Calcify на GitHub"
-    />
-  </a>
-</p>
+Если калькулятор пригодился — поставьте ⭐
 
-<p align="center">
-  ⭐ Если Calcify оказался полезным — поставьте звезду на GitHub.
-</p>
+</div>
